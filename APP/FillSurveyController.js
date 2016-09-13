@@ -3,7 +3,7 @@
 
     angular.module('app').controller('FillSurveyController', ProductController);
 
-    function ProductController($http) {
+    function ProductController($http, $scope) {
         var vm = this;
         var dataService = $http;
 
@@ -14,14 +14,25 @@
         vm.cancelSurveyFill = cancelSurveyFill;
         vm.sendResults = sendResults;
         vm.ViewResults = ViewResults;
+
+        vm.GetAnswers = GetAnswers;
+
      
         vm.surveys = [];
         vm.survey = {};
-
+        vm.survey.Question = [];
+        vm.survey.Question = {};
         vm.surveyPrint = {};
         vm.surveyPrint.Comments = "";
 
         vm.surveyPrint.Answers = {};
+
+
+
+        vm.hola = function (row, value)
+        {
+            alert(row.Id + "  value: " + value);
+        }
 
 
         const pageMode = {
@@ -50,11 +61,38 @@
             vm.uiState.isSurveyResultsVisible =(state == pageMode.RESULTS);
         }
 
+    
+        function GetAnswers(id) {
+            dataService.get("http://localhost:37683/api/SurveyPrints/GetSurveyPrintAnswersBySurveyId/"+id)
+            .then(function (result) {
+                vm.surveyPrints = result.data;
 
+                for (var i = 0; i < vm.surveyPrints.length; i++) {
+
+                    var suma = 0;
+                    for (var j = 0; j < vm.surveyPrints[i].Answers.length; j++) {
+                        suma = suma + vm.surveyPrints[i].Answers[j].Value;
+                       
+
+                    }
+                    vm.surveyPrints[i].Average = suma / vm.surveyPrints.length;
+                  
+                }
+
+               // vm.surveys;
+
+              //  setUIState(pageMode.LIST);
+            },
+            function (error) {
+                handleException(error);
+            });
+        }
         function SurveyList() {
             dataService.get("http://localhost:37683/api/Surveys1/GetSurveys1")
             .then(function (result) {
                 vm.surveys = result.data;
+
+                // vm.surveys;
 
                 setUIState(pageMode.LIST);
             },
@@ -67,6 +105,7 @@
         function ViewResults(id) {
             //  alert(id);
             //surveyGet(id);
+            GetAnswers(id);
             setUIState(pageMode.RESULTS);
         }
         function fillSurvey(id) {
@@ -77,9 +116,16 @@
 
         function sendResults(id) {
             vm.surveyPrint.Id = 0;
+            vm.surveyPrint.Answers = [];
+            for (var i = 0 ; vm.survey.Questions.length > i; i++)
+            {
+              vm.surveyPrint.Answers.push({ QuestionId: vm.survey.Questions[i].Id, Value: vm.survey.Questions[i].resp });
+            }
+
+
          //   vm.surveyPrint.Comments = "HARDCODED";
             vm.surveyPrint.SurveyId = vm.survey.Id;
-            vm.surveyPrint.Answers = [{ QuestionId: 1, Value: 3 }, { QuestionId: 2, Value: 3 }, { QuestionId: 3, Value: 3 }];
+           // vm.surveyPrint.Answers = [{ QuestionId: 1, Value: 3 }, { QuestionId: 2, Value: 3 }, { QuestionId: 3, Value: 3 }];
             insertSurveyPrint();
            // alert("yeay");
             setUIState(pageMode.LIST);
@@ -113,6 +159,10 @@
               .then(function (result) {
                   // Display product
                   vm.survey = result.data;
+
+                  //for (i = 0;1<vm.survey.Questions.lenght;i++){
+                  //    vm.survey.Answers.push({id:i.Id, value:0});
+                  //}
 
                   console.log(vm.survey);
 

@@ -36,6 +36,18 @@ namespace API.Controllers
             return Ok(surveyPrint);
         }
 
+        [ResponseType(typeof(SurveyPrint))]
+        public IHttpActionResult GetSurveyPrintAnswersBySurveyId(int id)
+        {
+            var result = db.SurveyPrints.Where(e => e.SurveyId == id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result.ToList());
+        }
+
         // GET: api/SurveyPrints/5
         [ResponseType(typeof(SurveyPrint))]
         public IHttpActionResult GetSurveyPrintBySurveyId(int id)

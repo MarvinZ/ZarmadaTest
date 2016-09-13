@@ -74,15 +74,15 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="question in vm.survey.Questions ">
+                    <tr ng-repeat="question in vm.survey.Questions">
 
                         <td>{{question.Name}}</td>
                         <td>
-                            <input type="radio" name="culture" value="1"> 1
-                            <input type="radio" name="culture" value="2"> 2
-                            <input type="radio" name="culture" value="3"> 3
-                            <input type="radio" name="culture" value="4"> 4
-                            <input type="radio" name="culture" value="5"> 5
+                            <input type="radio" name="{{question.Name}}"  ng-model="question.resp" ng-value="1"> 1
+                            <input type="radio" name="{{question.Name}}"  ng-model="question.resp" ng-value="2"> 2
+                            <input type="radio" name="{{question.Name}}"  ng-model="question.resp" ng-value="3"> 3
+                            <input type="radio" name="{{question.Name}}"  ng-model="question.resp" ng-value="4"> 4
+                            <input type="radio" name="{{question.Name}}"  ng-model="question.resp" ng-value="5"> 5
                         </td>
                     </tr>
                 </tbody>
@@ -112,6 +112,50 @@
         <div ng-show="vm.uiState.isSurveyResultsVisible" class="table-responsive">
 
             Results for Survey: {{vm.survey.Name}}
+
+            <table id="surveyAnswers"
+                   class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th>Survey</th>
+                        <th>Comments</th>
+                        <th ng-repeat="xxx in vm.surveyPrints[0].Answers">
+
+                            {{xxx.Question.Name}}
+
+                        </th>
+                        <th>Average</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="surveyPrint in vm.surveyPrints">
+
+                        <td>{{surveyPrint.Id}}</td>
+                        <td>{{surveyPrint.Comments}}</td>
+                    <td ng-repeat="surveyPrint2 in surveyPrint.Answers"> 
+                    
+                            {{surveyPrint2.Value}}
+                    
+                    </td>
+                        <td>{{surveyPrint.Average}}</td>
+                </tbody>
+            </table>
+
+
+
+            
+
+
+
+
+
+
+
+
+
             <button class="btn btn-sm btn-primary"
                     type="button"
                     ng-click="vm.cancelSurveyFill(productForm)">

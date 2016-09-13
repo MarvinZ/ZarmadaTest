@@ -6,7 +6,7 @@
      ng-controller="ProductController as vm">
     <form name="productForm" novalidate>
         <!-- ** BEGIN MESSAGE AREA ** -->
-        <div ng-hide="vm.uiState.isValid || (productForm.$valid && !productForm.$pristine)" class="row">
+        @*<div ng-hide="vm.uiState.isValid || (productForm.$valid && !productForm.$pristine)" class="row">
             <div class="col-xs-12">
                 <div class="alert alert-danger
                     alert-dismissable"
@@ -40,7 +40,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         
 
@@ -114,6 +114,9 @@
                 @*<th>Introduction Date</th>
                         <th>Url</th>
                         <th>Price</th>*@
+                <th class="pdsa-action-button-column">
+                    Questions
+                </th>
                 <th class="pdsa-action-button-column">
                     Delete
                 </th>

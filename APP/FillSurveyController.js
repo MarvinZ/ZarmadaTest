@@ -111,6 +111,7 @@
         function fillSurvey(id) {
           //  alert(id);
             surveyGet(id);
+            vm.surveyPrint.Comments = '';
             setUIState(pageMode.SURVEY);
         }
 

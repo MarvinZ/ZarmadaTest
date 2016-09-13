@@ -66,7 +66,7 @@
             dataService.get("http://localhost:37683/api/SurveyPrints/GetSurveyPrintAnswersBySurveyId/"+id)
             .then(function (result) {
                 vm.surveyPrints = result.data;
-
+                var suma = 0;
                 for (var i = 0; i < vm.surveyPrints.length; i++) {
 
                     var suma = 0;
@@ -75,8 +75,8 @@
                        
 
                     }
-                    vm.surveyPrints[i].Average = suma / vm.surveyPrints.length;
-                  
+                    vm.surveyPrints[i].Average = suma / vm.surveyPrints[i].Answers.length;
+                    
                 }
 
                // vm.surveys;

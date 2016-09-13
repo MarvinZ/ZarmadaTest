@@ -5,23 +5,16 @@
 
 <h2>Fill Survey</h2>
 
-
-
-
-
-
 <div ng-app="app"
      ng-controller="FillSurveyController as vm">
     <form name="productForm" novalidate>
 
         <div ng-show="vm.uiState.isListAreaVisible" class="table-responsive">
 
-
             <table id="surveyTable"
                    class="table table-condensed table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-
                         <th>Survey Name</th>
                         <th>Fill Survey</th>
                         <th>view Results</th>
@@ -34,7 +27,6 @@
 
 
                         <td>{{survey.Name}}</td>
-
 
                         <td class="pdsa-action-button-column">
                             <a href="#"
@@ -50,9 +42,6 @@
                                 Results
                             </a>
                         </td>
-
-
-
                     </tr>
                 </tbody>
             </table>
@@ -62,15 +51,12 @@
 
             Survey: {{vm.survey.Name}}
 
-
             <table id="surveyQuestions"
                    class="table table-condensed table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-
                         <th>Question</th>
                         <th>Value</th>
-
                     </tr>
                 </thead>
 
@@ -99,8 +85,7 @@
                 <i class="glyphicon glyphicon-remove-circle"></i>
                 &nbsp;Send
             </button>
-
-
+            
             <button class="btn btn-sm btn-primary"
                     type="button"
                     ng-click="vm.cancelSurveyFill(productForm)">
@@ -109,31 +94,23 @@
             </button>
         </div>
 
-
         <div ng-show="vm.uiState.isSurveyResultsVisible" class="table-responsive">
-
             Results for Survey: {{vm.survey.Name}}
-
             <table id="surveyAnswers"
                    class="table table-condensed table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-
                         <th>Survey</th>
                         <th>Comments</th>
                         <th ng-repeat="xxx in vm.surveyPrints[0].Answers">
-
                             {{xxx.Question.Name}}
-
                         </th>
                         <th>Average</th>
-
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr ng-repeat="surveyPrint in vm.surveyPrints">
-
                         <td>{{surveyPrint.Id}}</td>
                         <td>{{surveyPrint.Comments}}</td>
                     <td ng-repeat="surveyPrint2 in surveyPrint.Answers"> 

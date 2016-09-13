@@ -1,0 +1,273 @@
+﻿@{
+    ViewBag.Title = "Zarmada Test 2";
+}
+
+<div ng-app="app"
+     ng-controller="ProductController as vm">
+    <form name="productForm" novalidate>
+        <!-- ** BEGIN MESSAGE AREA ** -->
+        <div ng-hide="vm.uiState.isValid || (productForm.$valid && !productForm.$pristine)" class="row">
+            <div class="col-xs-12">
+                <div class="alert alert-danger
+                    alert-dismissable"
+                     role="alert">
+                    <button type="button" class="close"
+                            data-dismiss="alert">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <ul>
+                        <li ng-repeat="msg in vm.uiState.messages">
+                            {{msg.message}}
+                        </li>
+                        <li ng-show="productForm.productName.$error.required">
+                            Product name must be filled in.
+                        </li>
+                        <li ng-show="!productForm.productName.$valid">
+                            Product name must be between 4 and 150 characters
+                        </li>
+                        <li ng-show="!productForm.introductionDate.$valid">
+                            Introduction date must be filled in
+                        </li>
+                        <li ng-show="productForm.price.$error.required">
+                            Price must be filled in
+                        </li>
+                        <li ng-show="!productForm.price.$valid">
+                            Price must be between $0.01 and $9,999.99
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div ng-show="vm.uiState.isDetailAreaVisible" class="panel panel-primary">
+ 
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                Product Information
+            </h1>
+        </div>
+        <div class="panel-body">
+            <!-- ** BEGIN INPUT AREA -->
+            @*<div class="form-group">
+                    <label for="categoryId">Category</label>
+                    <select id="categoryId"
+                            class="form-control"
+                            ng-model="vm.product.Category"
+                            ng-options="item.CategoryName for item in vm.categories track by item.CategoryId"></select>
+                </div>*@
+            <div class="form-group">
+                <label for="surveyName">Survey Name</label>
+                <input type="text" class="form-control"
+                       id="surveyName"
+                       name="surveyName"
+                       required
+                       @*ng-minlength="4"
+                       ng-maxlength="150"*@
+                       ng-model="vm.survey.Name"/>
+            </div>
+
+
+            <!-- ** END INPUT AREA -->
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button class="btn btn-sm btn-primary"
+                            type="button"
+                            ng-click="vm.saveClick(productForm)">
+                        <i class="glyphicon glyphicon-floppy-disk"></i>
+                        &nbsp;Save
+                    </button>
+                    <button class="btn btn-sm btn-primary"
+                            type="button"
+                            ng-click="vm.cancelClick(productForm)">
+                        <i class="glyphicon glyphicon-remove-circle"></i>
+                        &nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        
+    <div ng-show="vm.uiState.isListAreaVisible" class="table-responsive">
+        <button type="button"
+                class="btn btn-sm btn-success"
+                ng-click="vm.addClick()">
+            <i class="glyphicon glyphicon-plus"></i>
+            &nbsp;Add Survey
+        </button>
+        <table id="surveyTable"
+               class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="pdsa-action-button-column">
+                    Edit
+                </th>
+                <th>Survey Name</th>
+                @*<th>Introduction Date</th>
+                        <th>Url</th>
+                        <th>Price</th>*@
+                <th class="pdsa-action-button-column">
+                    Delete
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="survey in vm.surveys ">
+                <td class="pdsa-action-button-column">
+                    <a href="#"
+                       ng-click="vm.editClick(survey.Id)"
+                       class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+                <td>{{survey.Name}}</td>
+
+
+                <td class="pdsa-action-button-column">
+                    <a href="#"
+                       ng-click="vm.editQuestions(survey.Id)"
+                       class="btn btn-default btn-sm">
+Questions                    </a>
+                </td>
+                <td class="pdsa-action-button-column">
+                    <a href="#"
+                       ng-click="vm.deleteClick(survey.Id)"
+                       class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <!-- ** END LIST AREA ** -->
+
+        <div ng-show="vm.uiState.isQuestionsAreaVisible" class="">
+        Questions for {{vm.survey.Name}} go here!
+
+        <button type="button"
+                class="btn btn-sm btn-success"
+                ng-click="vm.addQuestionClick()">
+            <i class="glyphicon glyphicon-plus"></i>
+            &nbsp;Add question
+        </button>
+        <table id="questionsTable"
+               class="table table-condensed table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="pdsa-action-button-column">
+                    Edit
+                </th>
+                <th>Question</th>
+                @*<th>Introduction Date</th>
+                    <th>Url</th>
+                    <th>Price</th>*@
+                <th class="pdsa-action-button-column">
+                    Delete
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="question in vm.questions ">
+                <td class="pdsa-action-button-column">
+                    <a href="#"
+                       ng-click="vm.editquestionClick(question.Id)"
+                       class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                </td>
+                <td>{{question.Name}}</td>
+
+
+
+                <td class="pdsa-action-button-column">
+                    <a href="#"
+                       ng-click="vm.deleteQuestionClick(question.Id)"
+                       class="btn btn-default btn-sm">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <hr/>
+
+
+         
+
+
+            <button class="btn btn-sm btn-primary"
+                type="button"
+                ng-click="vm.cancelClick(productForm)">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+            &nbsp;Cancel
+        </button>
+    </div>
+
+
+
+        <div ng-show="vm.uiState.isAddQuestionsAreaVisible" class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                     Questions
+                </h1>
+            </div>
+            <div class="panel-body">
+         
+                <div class="form-group">
+                    <label for="questionName">Question Name</label>
+                    <input type="text" class="form-control"
+                           id="questionName"
+                           name="questionName"
+                           required
+                           @*ng-minlength="4"
+                           ng-maxlength="150"*@
+                           ng-model="vm.question.Name" />
+                </div>
+
+
+                <!-- ** END INPUT AREA -->
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-sm btn-primary"
+                                type="button"
+                                ng-click="vm.saveQuestionClick(productForm)">
+                            <i class="glyphicon glyphicon-floppy-disk"></i>
+                            &nbsp;Save
+                        </button>
+                        <button class="btn btn-sm btn-primary"
+                                type="button"
+                                ng-click="vm.cancelQuestionClick(productForm)">
+                            <i class="glyphicon glyphicon-remove-circle"></i>
+                            &nbsp;Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+
+@section scripts {
+    <script src="~/app.js"></script>
+    <script src="~/productController.js"></script>
+}

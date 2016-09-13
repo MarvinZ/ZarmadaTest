@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Fill Survey</h2>
+
+
+
+
+
+
+<div ng-app="app"
+     ng-controller="FillSurveyController as vm">
+    <form name="productForm" novalidate>
+
+        <div ng-show="vm.uiState.isListAreaVisible" class="table-responsive">
+
+
+            <table id="surveyTable"
+                   class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th>Survey Name</th>
+                        <th>Fill Survey</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="survey in vm.surveys ">
+
+
+                        <td>{{survey.Name}}</td>
+
+
+                        <td class="pdsa-action-button-column">
+                            <a href="#"
+                               ng-click="vm.fillSurvey(survey.Id)"
+                               class="btn btn-default btn-sm">
+                                Fill
+                            </a>
+                        </td>
+                        <td class="pdsa-action-button-column">
+                            <a href="#"
+                               ng-click="vm.ViewResults(survey.Id)"
+                               class="btn btn-default btn-sm">
+                                Results
+                            </a>
+                        </td>
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-show="vm.uiState.isSurveyAreaVisible" class="table-responsive">
+
+            Survey: {{vm.survey.Name}}
+
+
+            <table id="surveyQuestions"
+                   class="table table-condensed table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th>Question</th>
+                        <th>Value</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="question in vm.survey.Questions ">
+
+                        <td>{{question.Name}}</td>
+                        <td>
+                            <input type="radio" name="culture" value="1"> 1
+                            <input type="radio" name="culture" value="2"> 2
+                            <input type="radio" name="culture" value="3"> 3
+                            <input type="radio" name="culture" value="4"> 4
+                            <input type="radio" name="culture" value="5"> 5
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="question">
+                <span>Comments</span> <textarea ng-model="vm.surveyPrint.Comments"></textarea>
+            </div>
+
+            <button class="btn btn-sm btn-primary"
+                    type="button"
+                    ng-click="vm.sendResults(productForm)">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                &nbsp;Send
+            </button>
+
+
+            <button class="btn btn-sm btn-primary"
+                    type="button"
+                    ng-click="vm.cancelSurveyFill(productForm)">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                &nbsp;Cancel
+            </button>
+        </div>
+
+
+        <div ng-show="vm.uiState.isSurveyResultsVisible" class="table-responsive">
+
+            Results for Survey: {{vm.survey.Name}}
+            <button class="btn btn-sm btn-primary"
+                    type="button"
+                    ng-click="vm.cancelSurveyFill(productForm)">
+                <i class="glyphicon glyphicon-remove-circle"></i>
+                &nbsp;Cancel
+            </button>
+        </div>
+    </form>
+</div>
+
+@section scripts {
+    <script src="~/app.js"></script>
+    <script src="~/FillSurveyController.js"></script>
+}
+
